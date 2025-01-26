@@ -1,0 +1,44 @@
+import { reply } from './util/messenger';
+import { Scenes } from 'telegraf';
+import I18n from '../i18n/i18n';
+
+const i18n = new I18n('en');
+
+const registerMainMenu = (bot: any, mainMenu: Scenes.BaseScene<Scenes.SceneContext>) => {
+    /* Set scene enter commands */
+    bot.command('mainMenu', (ctx: Scenes.SceneContext) => ctx.scene.enter('mainMenu'));
+    bot.hears('mainMenu', (ctx: Scenes.SceneContext) => ctx.scene.enter('mainMenu'));
+    /* Special commands */
+    mainMenu.enter((ctx: Scenes.SceneContext) => { onEntrance(ctx) });
+    mainMenu.command('help', (ctx: Scenes.SceneContext) => { reply(ctx, i18n.t('help_message')); });
+    mainMenu.on('message', (ctx: Scenes.SceneContext) => { parser(ctx); });
+}
+
+const onEntrance = async (ctx: Scenes.SceneContext) => {
+    reply(ctx, i18n.t('select_an_option'), mainMenuOptions);
+}
+
+const parser = async (ctx: Scenes.SceneContext) => {
+    if (!ctx.text) return;
+    switch (ctx.text) {
+        case i18n.t('buttons.available_agents'):
+            ctx.scene.enter('agents');
+            break;
+        default:
+            reply(ctx, i18n.t('select_an_option'), mainMenuOptions);
+            break
+    }
+}
+
+const mainMenuOptions = {
+    reply_markup: JSON.stringify({
+        keyboard: [
+            [{ text: i18n.t('buttons.available_agents') }]
+        ],
+        one_time_keyboard: true
+    })
+};
+
+export {
+    registerMainMenu
+};
