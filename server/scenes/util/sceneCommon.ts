@@ -1,11 +1,16 @@
-import { Scenes } from 'telegraf';
-import { SceneSessionData } from 'telegraf/typings/scenes';
+import { Scenes, Context } from 'telegraf';
 
-export async function setBetweenSceneCommands(sceneName: Scenes.BaseScene<Scenes.SceneContext>) {
-    sceneName.command('main_menu', (ctx) => { ctx.scene.enter('mainMenu'); })
-    sceneName.command('cancel', (ctx) => { ctx.scene.enter('mainMenu'); })
+export async function setBetweenSceneCommands(sceneName: Scenes.BaseScene<LingulyContext>) {
+    sceneName.command('main_menu', (ctx: LingulyContext) => { ctx.scene.enter('mainMenu'); })
+    sceneName.command('cancel', (ctx: LingulyContext) => { ctx.scene.enter('mainMenu'); })
 }
 
-export interface LingulySceneSession extends SceneSessionData {
+interface LingulySession extends Scenes.SceneSession {
+    // will be available under `ctx.session.selectedAgent`
     selectedAgent?: any;
+}
+
+export interface LingulyContext extends Context {
+    session: LingulySession;
+    scene: Scenes.SceneContextScene<LingulyContext>;
 }
