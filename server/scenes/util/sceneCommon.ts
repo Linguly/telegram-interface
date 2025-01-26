@@ -10,7 +10,7 @@ interface LingulySession extends Scenes.SceneSession {
     selectedAgent?: any;
 }
 
-export interface LingulyContext extends Context {
+export interface LingulyContext1 extends Context {
     session: LingulySession;
     scene: Scenes.SceneContextScene<LingulyContext>;
 }
