@@ -2,33 +2,34 @@ import { reply } from './util/messenger';
 import { Scenes } from 'telegraf';
 import I18n from '../i18n/i18n';
 import { getAgents } from '../services/agents';
+import { setBetweenSceneCommands, LingulySceneSession } from './util/sceneCommon';
 
 const i18n = new I18n('en');
 let availableAgents: any;
 
-const registerAgents = (bot: any, agents: Scenes.BaseScene<Scenes.SceneContext>) => {
+const registerAgents = (bot: any, agents: Scenes.BaseScene<Scenes.SceneContext<LingulySceneSession>>) => {
     /* Set scene enter commands */
-    bot.command('agents', (ctx: Scenes.SceneContext) => ctx.scene.enter('agents'));
-    bot.hears('agents', (ctx: Scenes.SceneContext) => ctx.scene.enter('agents'));
+    bot.command('agents', (ctx: Scenes.SceneContext<LingulySceneSession>) => ctx.scene.enter('agents'));
+    bot.hears('agents', (ctx: Scenes.SceneContext<LingulySceneSession>) => ctx.scene.enter('agents'));
+    setBetweenSceneCommands(agents);
     /* Special commands */
-    agents.enter((ctx: Scenes.SceneContext) => { onEntrance(ctx) });
-    agents.command('help', (ctx: Scenes.SceneContext) => { reply(ctx, i18n.t('help_message')); });
-    agents.on('message', (ctx: Scenes.SceneContext) => { parser(ctx); });
+    agents.enter((ctx: Scenes.SceneContext<LingulySceneSession>) => { onEntrance(ctx) });
+    agents.command('help', (ctx: Scenes.SceneContext<LingulySceneSession>) => { reply(ctx, i18n.t('help_message')); });
+    agents.on('message', (ctx: Scenes.SceneContext<LingulySceneSession>) => { parser(ctx); });
 }
 
-const onEntrance = async (ctx: Scenes.SceneContext) => {
+const onEntrance = async (ctx: Scenes.SceneContext<LingulySceneSession>) => {
 
     reply(ctx, i18n.t('welcome_message'), await getAgentOptions());
 }
 
-const parser = async (ctx: Scenes.SceneContext) => {
+const parser = async (ctx: Scenes.SceneContext<LingulySceneSession>) => {
     if (!ctx.text) return;
     // Check if the user selected an agent
     const agent = availableAgents.find((agent: any) => agent.display_name === ctx.text);
     if (agent) {
-        // Call to Linguly Core to start a chat with the selected agent
-        // await startChat(agent.id);
-        reply(ctx, i18n.t('chat_started'));
+        //ctx.session.selectedAgent = agent;  //Todo read from session or redis user context
+        ctx.scene.enter('agentChat');
         return;
     }
 

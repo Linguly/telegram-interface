@@ -6,7 +6,7 @@ const i18n = new I18n('en');
 
 const registerMainMenu = (bot: any, mainMenu: Scenes.BaseScene<Scenes.SceneContext>) => {
     /* Set scene enter commands */
-    bot.command('mainMenu', (ctx: Scenes.SceneContext) => ctx.scene.enter('mainMenu'));
+    bot.command('main_menu', (ctx: Scenes.SceneContext) => ctx.scene.enter('mainMenu'));
     bot.hears('mainMenu', (ctx: Scenes.SceneContext) => ctx.scene.enter('mainMenu'));
     /* Special commands */
     mainMenu.enter((ctx: Scenes.SceneContext) => { onEntrance(ctx) });

@@ -13,3 +13,16 @@ export async function getAgents() {
         throw error;
     }
 }
+export async function chatWithAgent(agentId: string, content: string) {
+    const method = 'POST';
+    const url = `${process.env.LINGULY_CORE_BASE_URL}/agent/${agentId}/chat`;
+    const body = { content };
+
+    try {
+        const response = await callLingulyCoreApi(method, url, body);
+        return response.content;
+    } catch (error) {
+        console.error('Error chatting with agent:', error);
+        throw error;
+    }
+}
