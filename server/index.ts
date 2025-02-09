@@ -28,8 +28,8 @@ export default async () => {
 
         console.log(`Launching the bot! :)`);
         await bot.launch();
-        console.log(`Bot stopped! :|`);
     } catch (err) {
         console.error(err);
+        console.log(`Bot stopped! :|`);
     }
 }
