@@ -25,6 +25,9 @@ const parser = async (ctx: LingulyContext) => {
         case i18n.t('buttons.available_agents'):
             ctx.scene.enter('agents');
             break;
+        case i18n.t('buttons.login'):
+            ctx.scene.enter('login');
+            break;
         default:
             reply(ctx, i18n.t('select_an_option'), mainMenuOptions);
             break
@@ -34,7 +37,8 @@ const parser = async (ctx: LingulyContext) => {
 const mainMenuOptions = {
     reply_markup: JSON.stringify({
         keyboard: [
-            [{ text: i18n.t('buttons.available_agents') }]
+            [{ text: i18n.t('buttons.available_agents') }],
+            [{ text: i18n.t('buttons.login') }]
         ],
         one_time_keyboard: true
     })

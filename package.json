@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node dist/index.js",
     "build": "tsc && copyfiles -u 1 'server/i18n/*.json' dist/server",
-    "watch": "tsc -w"
+    "dev": "ts-node-dev --respawn --transpile-only src/index.ts"
   },
   "repository": {
     "type": "git",
@@ -24,11 +24,13 @@
   "devDependencies": {
     "@types/node": "^22.10.10",
     "copyfiles": "^2.4.1",
+    "ts-node-dev": "^2.0.0",
     "typescript": "^4.0.0"
   },
   "dependencies": {
     "axios": "^1.7.9",
     "dotenv": "^16.4.7",
+    "ioredis": "^5.6.1",
     "telegraf": "^4.16.3",
     "telegraf-inline-menu": "^6.3.0"
   }
