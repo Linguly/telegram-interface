@@ -64,7 +64,7 @@ const signupTheUser = async (ctx: LingulyContext, password: string) => {
         await ctx.scene.enter('signup');
     }
     else {
-        await reply(ctx, i18n.t('signup.unknown_error'));
+        await reply(ctx, i18n.t('signup.error_unknown'));
         // Reset user state
         await ctx.scene.enter('signup');
     }

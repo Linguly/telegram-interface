@@ -36,8 +36,19 @@ const parser = async (ctx: LingulyContext) => {
         return;
     }
     try {
-        const response = await chatWithAgent(agentId, ctx.text);
-        await reply(ctx, response);
+        const response = await chatWithAgent(ctx, agentId, ctx.text);
+        if (response.success) {
+            await reply(ctx, response.data.content);
+        }
+        else if (response.status === 401) {
+            await reply(ctx, i18n.t('agents.error_unauthorized'));
+            await ctx.scene.enter('login');
+        }
+        else {
+            console.error('Error fetching agents:', response);
+            await reply(ctx, i18n.t('agents.error_unknown'));
+            await ctx.scene.enter('mainMenu');
+        }
     } catch (error) {
         console.error('Error during chat with agent:', error);
         await reply(ctx, i18n.t('error_message'));

@@ -12,14 +12,15 @@ async function callLingulyCoreApi(method: Method, url: string, body: any, token:
             data: body,
             headers: headers
         });
-        return { success: true, data: response.data };
+        return { success: true, data: response.data, status: response.status };
     } catch (error) {
         console.error('Error calling Linguly Core API:', error);
         if (axios.isAxiosError(error) && error.response) {
             return {
                 success: false,
                 detail: error.response.data?.detail,
-                error: 'An error occurred while calling the Linguly Core API.'
+                error: 'An error occurred while calling the Linguly Core API.',
+                status: error.response.status
             };
         }
         return {

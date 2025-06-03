@@ -1,5 +1,5 @@
 import callLingulyCoreApi from './lingulyCore';
-import { getUserToken, setUserToken, setUserName, setUserEmail, setUserState } from '../localDB/user';
+import { getUserToken, setUserToken, setUserName, setUserEmail } from '../localDB/user';
 import { LingulyContext } from '../scenes/util/sceneCommon';
 
 export async function updateUserInfo(ctx: LingulyContext) {

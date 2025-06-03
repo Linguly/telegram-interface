@@ -20,8 +20,7 @@ const registerAgents = (bot: any, agents: Scenes.BaseScene<LingulyContext>) => {
 }
 
 const onEntrance = async (ctx: LingulyContext) => {
-    console.log(`User ${ctx.chat?.id} entered the agents scene.`);
-    await reply(ctx, i18n.t('welcome_message'), await getAgentOptions());
+    await replyWithAvailableAgents(ctx);
 }
 
 const parser = async (ctx: LingulyContext) => {
@@ -39,14 +38,31 @@ const parser = async (ctx: LingulyContext) => {
             await ctx.scene.enter('mainMenu');
             break;
         default:
-            await reply(ctx, i18n.t('select_an_option'), await getAgentOptions());
+            await replyWithAvailableAgents(ctx);
             break
     }
 }
 
-const getAgentOptions = async () => {
+const replyWithAvailableAgents = async (ctx: LingulyContext) => {
     // Call to get available agents from Linguly Core
-    availableAgents = await getAgents();
+    const response = await getAgents(ctx);
+    if (response.success) {
+        availableAgents = response.data;
+        await reply(ctx, i18n.t('agents.select_an_option'), getAgentOptions(availableAgents));
+    }
+    else if (response.status === 401) {
+        await reply(ctx, i18n.t('agents.error_unauthorized'));
+        await ctx.scene.enter('login');
+    }
+    else {
+        console.error('Error fetching agents:', response);
+        await reply(ctx, i18n.t('agents.error_unknown'));
+        await ctx.scene.enter('mainMenu');
+    }
+}
+
+const getAgentOptions = (availableAgents: any[]) => {
+
     // get the keyboard option list based on display_name in availableAgents
     let keyboardOptions = availableAgents.map((agent: any) => {
         return [{ text: agent.display_name }];

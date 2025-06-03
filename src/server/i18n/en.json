@@ -16,7 +16,7 @@
         "enter_email": "Please enter your email address to continue.",
         "enter_password": "Please enter your password to continue. \n\n💡*Hint:* You can later *delete* the message to make it secure.",
         "error_with_detail": "There is an error please try again. \nError detail: \n",
-        "unknown_error": "There is an unknown error. Please try later.",
+        "error_unknown": "There is an unknown error. Please try later.",
         "successful": "Now you are successfully logged in. \nEnjoy Linguly : )"
     },
     "signup": {
@@ -24,10 +24,13 @@
         "enter_email": "Please enter your email address to continue. \n\n💡*Hint:* This can be used to login in other Linguly interfaces. \nLearn more here: https://github.com/Linguly#interfaces",
         "enter_password": "Please enter your password to continue. \n\n💡*Hint:* You can later *delete* the message to make it secure.",
         "error_with_detail": "There is an error please try again. \nError detail: \n",
-        "unknown_error": "There is an unknown error. Please try later.",
+        "error_unknown": "There is an unknown error. Please try later.",
         "successful": "Now you are successfully signed up and logged in. \nEnjoy Linguly : )"
     },
     "agents": {
-        "error_no_agent_selected": "No agent selected!"
+        "select_an_option": "Please select one of the below agents to start chatting with them.",
+        "error_no_agent_selected": "No agent selected!",
+        "error_unauthorized": "It seems you are not logged in.",
+        "error_unknown": "There is an unknown error. Please try later."
     }
 }
