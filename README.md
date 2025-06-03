@@ -7,7 +7,7 @@ Telegram Interface
 1. Add the bot token and Linguly Core Base url you want to connect your interface to
 1. `npm install`
 1. `npm run build`
-1. `npm start` or `npm run dev` to run in watch mode
+1. `npm start` or `npm run dev` to run in dev mode
 1. Now you can start chatting with the bot you have added the bot token to the .env file
 
 ### Prepare Redis for local development
