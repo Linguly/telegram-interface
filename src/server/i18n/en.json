@@ -1,0 +1,36 @@
+{
+    "welcome_message": "Welcome to Linguly Live Telegram Interface. Please select an option from the menu below.",
+    "help_message": "Hi, How can I help you?",
+    "select_an_option": "Please select one of the below options",
+    "chat_started": "Now you can start chatting with the selected agent.",
+    "error_message": "Sorry, I didn't understand that. Please try again.",
+    "buttons": {
+        "available_agents": "Available Agents",
+        "back": "Back to Main Menu",
+        "login": "Log out -> Log in"
+    },
+    "login": {
+        "entrance_message": "Let's get you logged in to Linguly.\nDo you already have an account?",
+        "yes_account": "Yes, I have an account",
+        "no_account": "No, I need to create an account",
+        "enter_email": "Please enter your email address to continue.",
+        "enter_password": "Please enter your password to continue. \n\n💡*Hint:* You can later *delete* the message to make it secure.",
+        "error_with_detail": "There is an error please try again. \nError detail: \n",
+        "error_unknown": "There is an unknown error. Please try later.",
+        "successful": "Now you are successfully logged in. \nEnjoy Linguly : )"
+    },
+    "signup": {
+        "entrance_message": "Happy that you want to join us 🥳 \nHow should we call you?",
+        "enter_email": "Please enter your email address to continue. \n\n💡*Hint:* This can be used to login in other Linguly interfaces. \nLearn more here: https://github.com/Linguly#interfaces",
+        "enter_password": "Please enter your password to continue. \n\n💡*Hint:* You can later *delete* the message to make it secure.",
+        "error_with_detail": "There is an error please try again. \nError detail: \n",
+        "error_unknown": "There is an unknown error. Please try later.",
+        "successful": "Now you are successfully signed up and logged in. \nEnjoy Linguly : )"
+    },
+    "agents": {
+        "select_an_option": "Please select one of the below agents to start chatting with them.",
+        "error_no_agent_selected": "No agent selected!",
+        "error_unauthorized": "It seems you are not logged in.",
+        "error_unknown": "There is an unknown error. Please try later."
+    }
+}
