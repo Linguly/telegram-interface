@@ -2,10 +2,10 @@
   "name": "telegram-interface",
   "version": "1.0.0",
   "description": "Linguly Telegram Interface",
-  "main": "dist/index.js",
+  "main": "dist/src/index.js",
   "scripts": {
-    "start": "node dist/index.js",
-    "build": "tsc && copyfiles -u 1 'server/i18n/*.json' dist/server",
+    "start": "node dist/src/index.js",
+    "build": "rm -rf dist && tsc && cp src/server/i18n/*.json dist/src/server/i18n/",
     "dev": "ts-node-dev --respawn --transpile-only src/index.ts"
   },
   "repository": {
