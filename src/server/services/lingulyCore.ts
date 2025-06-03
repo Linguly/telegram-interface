@@ -18,7 +18,7 @@ async function callLingulyCoreApi(method: Method, url: string, body: any, token:
         if (axios.isAxiosError(error) && error.response) {
             return {
                 success: false,
-                detail: error.response?.data?.detail,
+                detail: error.response.data?.detail,
                 error: 'An error occurred while calling the Linguly Core API.'
             };
         }

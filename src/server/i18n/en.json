@@ -7,16 +7,27 @@
     "buttons": {
         "available_agents": "Available Agents",
         "back": "Back to Main Menu",
-        "login": "Login"
+        "login": "Log out -> Log in"
     },
     "login": {
-        "entrance_message": "Let's get you logged in to Linguly.\n Do you already have an account?",
+        "entrance_message": "Let's get you logged in to Linguly.\nDo you already have an account?",
         "yes_account": "Yes, I have an account",
         "no_account": "No, I need to create an account",
         "enter_email": "Please enter your email address to continue.",
-        "enter_password": "Please enter your password to continue. You can later delete the message to make it secure.",
+        "enter_password": "Please enter your password to continue. \n\n💡*Hint:* You can later *delete* the message to make it secure.",
         "error_with_detail": "There is an error please try again. \nError detail: \n",
         "unknown_error": "There is an unknown error. Please try later.",
-        "successful_login": "Now you are successfully logged in. \nEnjoy Linguly : )"
+        "successful": "Now you are successfully logged in. \nEnjoy Linguly : )"
+    },
+    "signup": {
+        "entrance_message": "Happy that you want to join us 🥳 \nHow should we call you?",
+        "enter_email": "Please enter your email address to continue. \n\n💡*Hint:* This can be used to login in other Linguly interfaces. \nLearn more here: https://github.com/Linguly#interfaces",
+        "enter_password": "Please enter your password to continue. \n\n💡*Hint:* You can later *delete* the message to make it secure.",
+        "error_with_detail": "There is an error please try again. \nError detail: \n",
+        "unknown_error": "There is an unknown error. Please try later.",
+        "successful": "Now you are successfully signed up and logged in. \nEnjoy Linguly : )"
+    },
+    "agents": {
+        "error_no_agent_selected": "No agent selected!"
     }
 }

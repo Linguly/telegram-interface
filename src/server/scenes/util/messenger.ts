@@ -1,8 +1,9 @@
 import { Context } from 'telegraf';
+import { removeKeyboard } from './sceneCommon';
 
 const reply = async (ctx: Context, message: string, options?: any) => {
     if (options === undefined)
-        options = {};
+        options = removeKeyboard;
     options.parse_mode = 'Markdown';
 
     /* pretend the bot is typing */

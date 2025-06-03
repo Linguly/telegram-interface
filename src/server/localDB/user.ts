@@ -1,24 +1,28 @@
-import redis from './redis';
 import { LingulyContext } from '../scenes/util/sceneCommon';
 
 export type UserState = 'login_or_signup' | 'login_email' | 'login_password' | 'signup_email' | 'signup_name' | 'signup_password';
 
-export async function getUserToken(chatId: string) {
-    var userToken: string | null = await redis.get(chatId);
-    if (userToken) {
-        return userToken;
-    } else {
-        return null;
-    }
-}
-
-export async function setUserToken(chatId: string, token: string) {
-    await redis.set(chatId, token);
-    console.log(`User token for ${chatId} set successfully.`);
-}
 
 /* User Context setter and getter functions using the session object in LingulyContext
- * Later we might want to use Redis for these states as well to make the chat fellow more robust */
+ * As we are using Redis for the telegram's store, all are stored in Redis behind the scene
+ * and managed by Telegram's Session. More info -> https://github.com/telegraf/session?tab=readme-ov-file#redis
+ * */
+
+export async function getUserToken(ctx: LingulyContext) {
+    if (!ctx.session || !ctx.session.userToken) {
+        return undefined;
+    }
+    return ctx.session.userToken;
+}
+
+export async function setUserToken(ctx: LingulyContext, token: string) {
+    if (!ctx.session) {
+        ctx.session = {};
+    }
+    ctx.session.userToken = token;
+    console.log(`User token for ${ctx.chat?.id} set successfully.`);
+}
+
 
 export async function getUserState(ctx: LingulyContext): Promise<UserState | undefined> {
     if (!ctx.session || !ctx.session.userState) {

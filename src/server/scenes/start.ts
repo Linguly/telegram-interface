@@ -7,29 +7,26 @@ const i18n = new I18n('en');
 
 const registerStart = (bot: any, start: Scenes.BaseScene<LingulyContext>) => {
     /* Set scene enter commands */
-    bot.command('start', (ctx: LingulyContext) => ctx.scene.enter('start'));
-    bot.hears('start', (ctx: LingulyContext) => ctx.scene.enter('start'));
+    bot.command('start', async (ctx: LingulyContext) => await ctx.scene.enter('start'));
+    bot.hears('start', async (ctx: LingulyContext) => await ctx.scene.enter('start'));
     /* Special commands */
-    start.enter((ctx: LingulyContext) => { onEntrance(ctx) });
-    start.command('help', (ctx: LingulyContext) => { reply(ctx, i18n.t('help_message')); });
-    start.on('message', (ctx: LingulyContext) => { parser(ctx); });
+    start.enter(async (ctx: LingulyContext) => { await onEntrance(ctx) });
+    start.command('help', async (ctx: LingulyContext) => { await reply(ctx, i18n.t('help_message')); });
+    start.on('message', async (ctx: LingulyContext) => { await parser(ctx); });
 }
 
 const onEntrance = async (ctx: LingulyContext) => {
-    reply(ctx, i18n.t('welcome_message'), greetingOptions);
+    await reply(ctx, i18n.t('welcome_message'), greetingOptions);
 }
 
 const parser = async (ctx: LingulyContext) => {
     if (!ctx.text) return;
     switch (ctx.text) {
-        case i18n.t('buttons.available_agents'):
-            ctx.scene.enter('agents');
-            break;
-        case i18n.t('buttons.back'):
-            ctx.scene.enter('mainMenu');
+        case i18n.t('buttons.login'):
+            await ctx.scene.enter('login');
             break;
         default:
-            reply(ctx, i18n.t('select_an_option'), greetingOptions);
+            await reply(ctx, i18n.t('select_an_option'), greetingOptions);
             break
     }
 }
@@ -37,7 +34,7 @@ const parser = async (ctx: LingulyContext) => {
 const greetingOptions = {
     reply_markup: JSON.stringify({
         keyboard: [
-            [{ text: i18n.t('buttons.available_agents') }],
+            [{ text: i18n.t('buttons.login') }],
             [{ text: i18n.t('buttons.back') }]
         ],
         one_time_keyboard: true
