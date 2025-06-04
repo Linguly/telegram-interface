@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  telegram-interface:
+    build: .
+    container_name: telegram-interface
+    networks:
+      - coolify
+    environment:
+      - BOT_TOKEN=${BOT_TOKEN}
+      - LINGULY_CORE_BASE_URL=http:/linguly-core:3001
+      - REDIS_CONNECTION_URL=${REDIS_CONNECTION_URL}
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+
+networks:
+  coolify:
+    external: true
