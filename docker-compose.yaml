@@ -8,7 +8,7 @@ services:
       - coolify
     environment:
       - BOT_TOKEN=${BOT_TOKEN}
-      - LINGULY_CORE_BASE_URL=http:/linguly-core-${SERVICE_FQDN_LINGULY_CORE}:3001
+      - LINGULY_CORE_BASE_URL=${LINGULY_CORE_BASE_URL:-http:/linguly-core-${SERVICE_FQDN_LINGULY_CORE}:3001}
       - REDIS_CONNECTION_URL=${REDIS_CONNECTION_URL}
       - REDIS_PASSWORD=${REDIS_PASSWORD}
 
