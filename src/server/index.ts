@@ -7,6 +7,7 @@ import { registerAgents } from "./scenes/agents";
 import { registerAgentChat } from "./scenes/agentChat";
 import { registerLogin } from "./scenes/login";
 import { registerSignup } from "./scenes/signup";
+import { registerGoals } from "./scenes/goals";
 
 const BOT_TOKEN = process.env.BOT_TOKEN || '';
 const bot = new Telegraf<LingulyContext>(BOT_TOKEN);
@@ -19,8 +20,9 @@ export default async () => {
         const agentChat = new Scenes.BaseScene<LingulyContext>('agentChat');
         const login = new Scenes.BaseScene<LingulyContext>('login');
         const signup = new Scenes.BaseScene<LingulyContext>('signup');
+        const goals = new Scenes.BaseScene<LingulyContext>('goals');
 
-        const stage = new Scenes.Stage<LingulyContext>([start, mainMenu, agents, agentChat, login, signup], { default: 'start' });
+        const stage = new Scenes.Stage<LingulyContext>([start, mainMenu, agents, agentChat, login, signup, goals], { default: 'start' });
 
         const store = Redis<LingulySession>({
             url: process.env.REDIS_CONNECTION_URL,
@@ -37,6 +39,7 @@ export default async () => {
         registerAgentChat(bot, agentChat);
         registerLogin(bot, login);
         registerSignup(bot, signup);
+        registerGoals(bot, goals);
 
         console.log(`Launching the bot...`);
         await bot.launch(() => {

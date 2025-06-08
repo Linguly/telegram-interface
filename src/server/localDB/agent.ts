@@ -13,3 +13,17 @@ export async function setSelectedAgent(ctx: LingulyContext, selectedAgent: any) 
     }
     ctx.session.selectedAgent = selectedAgent;
 }
+
+export async function getSelectedGoal(ctx: LingulyContext): Promise<any | undefined> {
+    if (!ctx.session || !ctx.session.selectedGoal) {
+        return undefined;
+    }
+    return ctx.session.selectedGoal;
+}
+
+export async function setSelectedGoal(ctx: LingulyContext, selectedGoal: any) {
+    if (!ctx.session) {
+        ctx.session = {};
+    }
+    ctx.session.selectedGoal = selectedGoal;
+}

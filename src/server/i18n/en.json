@@ -6,6 +6,7 @@
     "error_message": "Sorry, I didn't understand that. Please try again.",
     "buttons": {
         "available_agents": "Available Agents",
+        "goals": "Create/Switch Goals",
         "back": "Back to Main Menu",
         "login": "Log out -> Log in"
     },
@@ -31,6 +32,22 @@
         "select_an_option": "Please select one of the below agents to start chatting with them.",
         "error_no_agent_selected": "No agent selected!",
         "error_unauthorized": "It seems you are not logged in.",
-        "error_unknown": "There is an unknown error. Please try later."
+        "error_unknown": "There is an unknown error. Please try later.",
+        "error_no_goal_selected": "No goal selected! \nFirst create a goal or select an existing one."
+    },
+    "goals": {
+        "entrance_message": "What would you like to do with your goals?",
+        "create_a_goal": "Create a Goal",
+        "select_a_goal": "Select a Goal",
+        "enter_language": "Please select the language for your goal.",
+        "enter_context": "Please select the context for your goal.",
+        "enter_level": "Please select the level for your goal.",
+        "enter_period": "Please select the period for your goal.",
+        "goal_created_successfully": "Your goal has been created successfully!",
+        "goal_selected_successfully": "Goal selected successfully.",
+        "no_goals_available_create_one": "No goals available. Please create a new goal.",
+        "select_an_option": "Please select one of your goals below to be your active goal.",
+        "error_unauthorized": "You need to be logged in to manage your goals.",
+        "error_unknown": "There was an unknown error. Please try again."
     }
 }
