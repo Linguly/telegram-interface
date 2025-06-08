@@ -29,3 +29,13 @@ redis-cli ping
 ```
 
 > [Reference](https://dev.to/fredabod/building-a-redis-powered-nodejs-application-a-step-by-step-guide-4jeb)
+
+
+## Chat flow
+
+To make the chat flow design easier we are using drawio.
+To edit the [chatFlow.drawio](./chatFlow.drawio) file use the draw.io vscode extension or [the website](https://app.diagrams.net/).
+
+Here is the current chat flow exported as svg:
+
+![Chat flow](./chatFlow.svg)
