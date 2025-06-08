@@ -2,8 +2,9 @@ import { reply } from './util/messenger';
 import { Scenes } from 'telegraf';
 import I18n from '../i18n/i18n';
 import { getAgents } from '../services/agents';
+import { getSelectedGoal } from '../services/goals';
 import { setBetweenSceneCommands, LingulyContext } from './util/sceneCommon';
-import { setSelectedAgent } from '../localDB/agent';
+import { setSelectedAgent, setSelectedGoal } from '../localDB/agent';
 
 const i18n = new I18n('en');
 let availableAgents: any[] = [];
@@ -20,7 +21,9 @@ const registerAgents = (bot: any, agents: Scenes.BaseScene<LingulyContext>) => {
 }
 
 const onEntrance = async (ctx: LingulyContext) => {
-    await replyWithAvailableAgents(ctx);
+    if (await checkAndUpdateSelectedGoal(ctx)) {
+        await replyWithAvailableAgents(ctx);
+    }
 }
 
 const parser = async (ctx: LingulyContext) => {
@@ -58,6 +61,27 @@ const replyWithAvailableAgents = async (ctx: LingulyContext) => {
         console.error('Error fetching agents:', response);
         await reply(ctx, i18n.t('agents.error_unknown'));
         await ctx.scene.enter('mainMenu');
+    }
+}
+
+const checkAndUpdateSelectedGoal = async (ctx: LingulyContext) => {
+    // Check if the user has a selected goal calling the API
+    const response = await getSelectedGoal(ctx);
+    if (response.success) {
+        const selectedGoal = response.data;
+        await setSelectedGoal(ctx, selectedGoal);
+        return true;
+    }
+    else if (response.status === 404) {
+        await reply(ctx, i18n.t('agents.error_no_goal_selected'));
+        await ctx.scene.enter('goals');
+        return false;
+    }
+    else {
+        console.error('Error fetching selected goal:', response);
+        await reply(ctx, i18n.t('agents.error_unknown'));
+        await ctx.scene.enter('mainMenu');
+        return false;
     }
 }
 

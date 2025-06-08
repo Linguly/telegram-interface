@@ -11,6 +11,8 @@ export async function setBetweenSceneCommands(sceneName: Scenes.BaseScene<Lingul
     sceneName.command('main_menu', (ctx: LingulyContext) => { ctx.scene.enter('mainMenu'); })
     sceneName.command('start', (ctx: LingulyContext) => { ctx.scene.enter('start'); })
     sceneName.command('login', (ctx: LingulyContext) => { ctx.scene.enter('login'); })
+    sceneName.command('agents', (ctx: LingulyContext) => { ctx.scene.enter('agents'); })
+    sceneName.command('goals', (ctx: LingulyContext) => { ctx.scene.enter('goals'); })
 
     // general commands
     sceneName.command('cancel', (ctx: LingulyContext) => { ctx.scene.enter('mainMenu'); })
@@ -19,6 +21,8 @@ export async function setBetweenSceneCommands(sceneName: Scenes.BaseScene<Lingul
 export interface LingulySession extends Scenes.SceneSession {
     // e.g will be available under `ctx.session.selectedAgent`
     selectedAgent?: any;
+    selectedGoal?: any;
+    newGoal?: any;
     userState?: UserState;
     userEmail?: string;
     userName?: string;

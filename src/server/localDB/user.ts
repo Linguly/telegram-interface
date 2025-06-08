@@ -1,6 +1,8 @@
 import { LingulyContext } from '../scenes/util/sceneCommon';
 
-export type UserState = 'login_or_signup' | 'login_email' | 'login_password' | 'signup_email' | 'signup_name' | 'signup_password';
+export type UserState = 'idle'
+    | 'login_or_signup' | 'login_email' | 'login_password' | 'signup_email' | 'signup_name' | 'signup_password'
+    | 'create_or_select_goal' | 'create_a_goal' | 'select_a_goal' | 'enter_context' | 'enter_level' | 'enter_period';
 
 
 /* User Context setter and getter functions using the session object in LingulyContext

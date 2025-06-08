@@ -2,6 +2,7 @@ import { reply } from './util/messenger';
 import { Scenes } from 'telegraf';
 import I18n from '../i18n/i18n';
 import { setBetweenSceneCommands, LingulyContext } from './util/sceneCommon';
+import { setUserState } from '../localDB/user';
 
 const i18n = new I18n('en');
 
@@ -17,6 +18,7 @@ const registerMainMenu = (bot: any, mainMenu: Scenes.BaseScene<LingulyContext>) 
 }
 
 const onEntrance = async (ctx: LingulyContext) => {
+    await setUserState(ctx, 'idle');
     await reply(ctx, i18n.t('select_an_option'), mainMenuOptions);
 }
 
@@ -25,6 +27,9 @@ const parser = async (ctx: LingulyContext) => {
     switch (ctx.text) {
         case i18n.t('buttons.available_agents'):
             await ctx.scene.enter('agents');
+            break;
+        case i18n.t('buttons.goals'):
+            await ctx.scene.enter('goals');
             break;
         case i18n.t('buttons.login'):
             await ctx.scene.enter('login');
@@ -39,6 +44,7 @@ const mainMenuOptions = {
     reply_markup: JSON.stringify({
         keyboard: [
             [{ text: i18n.t('buttons.available_agents') }],
+            [{ text: i18n.t('buttons.goals') }],
             [{ text: i18n.t('buttons.login') }]
         ],
         one_time_keyboard: true
