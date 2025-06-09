@@ -72,6 +72,11 @@ const checkAndUpdateSelectedGoal = async (ctx: LingulyContext) => {
         await setSelectedGoal(ctx, selectedGoal);
         return true;
     }
+    else if (response.status === 401) {
+        await reply(ctx, i18n.t('agents.error_unauthorized'));
+        await ctx.scene.enter('login');
+        return false;
+    }
     else if (response.status === 404) {
         await reply(ctx, i18n.t('agents.error_no_goal_selected'));
         await ctx.scene.enter('goals');
