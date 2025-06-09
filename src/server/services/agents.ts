@@ -41,7 +41,7 @@ export async function chatWithAgent(ctx: LingulyContext, agentId: string, conten
         return { success: false, message: 'User not authenticated', status: 401 };
     }
     const method = 'POST';
-    const url = `${process.env.LINGULY_CORE_BASE_URL}/agent/${agentId}/chat`;
+    const url = `${process.env.LINGULY_CORE_BASE_URL}/agents/${agentId}/chat`;
     const body = { content };
 
     const response = await callLingulyCoreApi(method, url, body, userToken);
