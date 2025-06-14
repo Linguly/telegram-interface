@@ -21,9 +21,7 @@ const registerAgents = (bot: any, agents: Scenes.BaseScene<LingulyContext>) => {
 }
 
 const onEntrance = async (ctx: LingulyContext) => {
-    if (await checkAndUpdateSelectedGoal(ctx)) {
-        await replyWithAvailableAgents(ctx);
-    }
+    await replyWithAvailableAgents(ctx);
 }
 
 const parser = async (ctx: LingulyContext) => {
@@ -47,20 +45,28 @@ const parser = async (ctx: LingulyContext) => {
 }
 
 const replyWithAvailableAgents = async (ctx: LingulyContext) => {
-    // Call to get available agents from Linguly Core
-    const response = await getAgents(ctx);
-    if (response.success) {
-        availableAgents = response.data;
-        await reply(ctx, i18n.t('agents.select_an_option'), getAgentOptions(availableAgents));
-    }
-    else if (response.status === 401) {
-        await reply(ctx, i18n.t('agents.error_unauthorized'));
-        await ctx.scene.enter('login');
-    }
-    else {
-        console.error('Error fetching agents:', response);
-        await reply(ctx, i18n.t('agents.error_unknown'));
-        await ctx.scene.enter('mainMenu');
+    const selectedGoal = await checkAndUpdateSelectedGoal(ctx);
+    if (selectedGoal) {
+        // Call to get available agents from Linguly Core
+        const response = await getAgents(ctx);
+        if (response.success) {
+            availableAgents = response.data;
+            if (availableAgents.length > 0) {
+                await reply(ctx, i18n.t('agents.select_an_option', selectedGoal), getAgentOptions(availableAgents));
+            }
+            else {
+                await reply(ctx, i18n.t('agents.no_available_agent', selectedGoal), getAgentOptions(availableAgents));
+            }
+        }
+        else if (response.status === 401) {
+            await reply(ctx, i18n.t('agents.error_unauthorized'));
+            await ctx.scene.enter('login');
+        }
+        else {
+            console.error('Error fetching agents:', response);
+            await reply(ctx, i18n.t('agents.error_unknown'));
+            await ctx.scene.enter('mainMenu');
+        }
     }
 }
 
@@ -70,23 +76,23 @@ const checkAndUpdateSelectedGoal = async (ctx: LingulyContext) => {
     if (response.success) {
         const selectedGoal = response.data;
         await setSelectedGoal(ctx, selectedGoal);
-        return true;
+        return selectedGoal;
     }
     else if (response.status === 401) {
         await reply(ctx, i18n.t('agents.error_unauthorized'));
         await ctx.scene.enter('login');
-        return false;
+        return null;
     }
     else if (response.status === 404) {
         await reply(ctx, i18n.t('agents.error_no_goal_selected'));
         await ctx.scene.enter('goals');
-        return false;
+        return null;
     }
     else {
         console.error('Error fetching selected goal:', response);
         await reply(ctx, i18n.t('agents.error_unknown'));
         await ctx.scene.enter('mainMenu');
-        return false;
+        return null;
     }
 }
 

@@ -2,7 +2,7 @@
     "welcome_message": "Welcome to Linguly Live Telegram Interface. Please select an option from the menu below.",
     "help_message": "Hi, How can I help you?",
     "select_an_option": "Please select one of the below options",
-    "chat_started": "Now you can start chatting with the selected agent.",
+    "chat_started": "Now you can start chatting with the selected agent.\n\n Use /cancel command to go back.",
     "error_message": "Sorry, I didn't understand that. Please try again.",
     "buttons": {
         "available_agents": "Available Agents",
@@ -29,7 +29,8 @@
         "successful": "Now you are successfully signed up and logged in. \nEnjoy Linguly : )"
     },
     "agents": {
-        "select_an_option": "Please select one of the below agents to start chatting with them.",
+        "select_an_option": "Below are the available agents based on your selected goal: {{language}}, {{level}}\n\nPlease select one of the options to start chatting with them.",
+        "no_available_agent": "No available agent based on your selected goal: {{language}}, {{level}}",
         "error_no_agent_selected": "No agent selected!",
         "error_unauthorized": "It seems you are not logged in.",
         "error_unknown": "There is an unknown error. Please try later.",
