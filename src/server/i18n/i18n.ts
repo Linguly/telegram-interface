@@ -18,7 +18,18 @@ class I18n {
         }
     }
 
-    public t(key: string): string {
+    private addParamsToText(text: string, params: any): string {
+        if (!params || typeof params !== 'object') {
+            return text;
+        }
+
+        return text.replace(/{{(.*?)}}/g, (match, key) => {
+            const trimmedKey = key.trim();
+            return params.hasOwnProperty(trimmedKey) ? params[trimmedKey] : match;
+        });
+    }
+
+    public t(key: string, params?: any): string {
         const keys = key.split('.');
         let result: any = this.translations;
 
@@ -29,7 +40,7 @@ class I18n {
             }
         }
 
-        return result;
+        return this.addParamsToText(result, params);
     }
 }
 

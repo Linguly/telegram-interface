@@ -44,7 +44,7 @@ const parser = async (ctx: LingulyContext) => {
         default:
             switch (userState) {
                 case 'select_a_goal':
-                    // Check if the user selected an goal
+                    // Check if the user selected a goal
                     const selectedGoal = availableGoals.find((goal: any) => getGoalDisplayName(goal) === ctx.text);
                     if (selectedGoal) {
                         await selectGoal(ctx, selectedGoal.id);
@@ -53,21 +53,21 @@ const parser = async (ctx: LingulyContext) => {
                         await ctx.scene.enter('mainMenu');
                         return;
                     }
-                    await reply(ctx, i18n.t('login.enter_password'));
+                    await replyWithAvailableGoals(ctx);
                     break;
                 case 'create_a_goal':
-                    await setUserState(ctx, 'enter_context');
-                    ctx.session.newGoal.language = ctx.text;
-                    await reply(ctx, i18n.t('goals.enter_context'), getContextOptions());
-                    break;
-                case 'enter_context':
                     await setUserState(ctx, 'enter_level');
-                    ctx.session.newGoal.context = ctx.text;
+                    ctx.session.newGoal.language = ctx.text;
                     await reply(ctx, i18n.t('goals.enter_level'), getLevelOptions());
                     break;
                 case 'enter_level':
-                    await setUserState(ctx, 'enter_period');
+                    await setUserState(ctx, 'enter_context');
                     ctx.session.newGoal.level = ctx.text;
+                    await reply(ctx, i18n.t('goals.enter_context'), getContextOptions());
+                    break;
+                case 'enter_context':
+                    await setUserState(ctx, 'enter_period');
+                    ctx.session.newGoal.context = ctx.text;
                     await reply(ctx, i18n.t('goals.enter_period'), getPeriodOptions());
                     break;
                 case 'enter_period':
@@ -84,10 +84,10 @@ const parser = async (ctx: LingulyContext) => {
 
 const createTheGoal = async (ctx: LingulyContext) => {
     const language = await ctx.session.newGoal.language || '';
-    const context = await ctx.session.newGoal.context || '';
     const level = await ctx.session.newGoal.level || '';
+    const context = await ctx.session.newGoal.context || '';
     const period = await ctx.session.newGoal.period || '';
-    const response = await createGoal(ctx, language, context, level, period);
+    const response = await createGoal(ctx, language, level, context, period);
     if (response.success) {
         await reply(ctx, i18n.t('goals.goal_created_successfully'));
         await ctx.scene.enter('goals');
