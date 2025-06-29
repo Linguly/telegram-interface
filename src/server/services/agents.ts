@@ -54,7 +54,7 @@ export async function chatWithAgent(ctx: LingulyContext, agentId: string, conten
     }
     const method = 'POST';
     const url = `${process.env.LINGULY_CORE_BASE_URL}/agents/${agentId}/chat`;
-    const body = { content };
+    const body = [{ content, role: 'user' }];
 
     const response = await callLingulyCoreApi(method, url, body, userToken);
     return response;
