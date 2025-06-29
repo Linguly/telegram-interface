@@ -50,5 +50,10 @@
         "select_an_option": "Please select one of your goals below to be your active goal.",
         "error_unauthorized": "You need to be logged in to manage your goals.",
         "error_unknown": "There was an unknown error. Please try again."
+    },
+    "validator": {
+        "invalid_name": "Name must be at least 2 characters",
+        "invalid_email": "Invalid email address",
+        "invalid_password": "Password must be at least 9 characters"
     }
 }

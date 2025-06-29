@@ -4,6 +4,7 @@ import I18n from '../i18n/i18n';
 import { setBetweenSceneCommands, LingulyContext } from './util/sceneCommon';
 import { setUserState, getUserState, setUserEmail, getUserEmail, setUserToken } from '../localDB/user';
 import { login } from '../services/user'
+import { validate } from './util/validator'
 
 const i18n = new I18n('en');
 
@@ -44,13 +45,17 @@ const parser = async (ctx: LingulyContext) => {
         default:
             switch (userState) {
                 case 'login_email':
-                    await setUserState(ctx, 'login_password');
-                    await setUserEmail(ctx, ctx.text);
-                    await reply(ctx, i18n.t('login.enter_password'));
+                    if (await validate(ctx, 'email', ctx.text)) {
+                        await setUserState(ctx, 'login_password');
+                        await setUserEmail(ctx, ctx.text);
+                        await reply(ctx, i18n.t('login.enter_password'));
+                    }
                     break;
                 case 'login_password':
-                    await setUserState(ctx, 'login_or_signup');
-                    await loginTheUser(ctx, ctx.text);
+                    if (await validate(ctx, 'password', ctx.text)) {
+                        await setUserState(ctx, 'login_or_signup');
+                        await loginTheUser(ctx, ctx.text);
+                    }
                     break;
                 default:
                     await ctx.scene.enter('login');
