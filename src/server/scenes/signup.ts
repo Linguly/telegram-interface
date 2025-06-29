@@ -4,6 +4,7 @@ import I18n from '../i18n/i18n';
 import { setBetweenSceneCommands, LingulyContext } from './util/sceneCommon';
 import { setUserState, getUserState, setUserName, getUserName, setUserEmail, getUserEmail } from '../localDB/user';
 import { signup } from '../services/user'
+import { validate } from './util/validator'
 
 const i18n = new I18n('en');
 
@@ -30,18 +31,24 @@ const parser = async (ctx: LingulyContext) => {
     const userState = await getUserState(ctx);
     switch (userState) {
         case 'signup_name':
-            await setUserState(ctx, 'signup_email');
-            await setUserName(ctx, ctx.text);
-            await reply(ctx, i18n.t('signup.enter_email'));
+            if (await validate(ctx, 'name', ctx.text)) {
+                await setUserState(ctx, 'signup_email');
+                await setUserName(ctx, ctx.text);
+                await reply(ctx, i18n.t('signup.enter_email'));
+            }
             break;
         case 'signup_email':
-            await setUserState(ctx, 'signup_password');
-            await setUserEmail(ctx, ctx.text);
-            await reply(ctx, i18n.t('signup.enter_password'));
+            if (await validate(ctx, 'email', ctx.text)) {
+                await setUserState(ctx, 'signup_password');
+                await setUserEmail(ctx, ctx.text);
+                await reply(ctx, i18n.t('signup.enter_password'));
+            }
             break;
         case 'signup_password':
-            await setUserState(ctx, 'signup_name');
-            await signupTheUser(ctx, ctx.text);
+            if (await validate(ctx, 'password', ctx.text)) {
+                await setUserState(ctx, 'signup_name');
+                await signupTheUser(ctx, ctx.text);
+            }
             break;
         default:
             await ctx.scene.enter('signup');
