@@ -15,7 +15,6 @@ const registerLogin = (bot: any, login: Scenes.BaseScene<LingulyContext>) => {
     setBetweenSceneCommands(login);
     /* Special commands */
     login.enter(async (ctx: LingulyContext) => { await onEntrance(ctx) });
-    login.command('help', async (ctx: LingulyContext) => { await reply(ctx, i18n.t('help_message')); });
     login.on('message', async (ctx: LingulyContext) => {
         await parser(ctx);
     });
@@ -25,7 +24,7 @@ const onEntrance = async (ctx: LingulyContext) => {
     await setUserState(ctx, 'login_or_signup');
     // Invalidate token to logout the user if they were logged in
     await setUserToken(ctx, '');
-    await reply(ctx, i18n.t('login.entrance_message'), greetingOptions);
+    await reply(ctx, i18n.t('login.entrance_message'), greetingOptions, 0);
 }
 
 const parser = async (ctx: LingulyContext) => {

@@ -11,12 +11,11 @@ const registerStart = (bot: any, start: Scenes.BaseScene<LingulyContext>) => {
     bot.hears('start', async (ctx: LingulyContext) => await ctx.scene.enter('start'));
     /* Special commands */
     start.enter(async (ctx: LingulyContext) => { await onEntrance(ctx) });
-    start.command('help', async (ctx: LingulyContext) => { await reply(ctx, i18n.t('help_message')); });
     start.on('message', async (ctx: LingulyContext) => { await parser(ctx); });
 }
 
 const onEntrance = async (ctx: LingulyContext) => {
-    await reply(ctx, i18n.t('welcome_message'), greetingOptions);
+    await reply(ctx, i18n.t('welcome_message'), greetingOptions, 0);
 }
 
 const parser = async (ctx: LingulyContext) => {

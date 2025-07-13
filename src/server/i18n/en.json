@@ -1,13 +1,13 @@
 {
     "welcome_message": "Welcome to Linguly Live Telegram Interface. Please select an option from the menu below.",
-    "help_message": "Hi, How can I help you?",
+    "help_message": "Welcome to Linguly, the open source language learning platform. 😊\n\nLinguly Live telegram bot is one of Linguly's live interfaces that is now available as a Beta version.\n\nTo learn more about Linguly check this:\nhttps://github.com/Linguly\n\nTo contribute in its development:\nhttps://docs.linguly.io/\n\n*How to use?*\n1- Log in or register\n2- Create a goal\n3- Select an Agent and start interacting \n\n💡*Hint:* Try Dictionary to add to the phrases you want to learn, or Masking to immerse yourself and learning by doing. \n\n*Commands:*\n/cancel - Back to Main Menu\n/start - Start from the beginning\n/help - Help message\n",
     "select_an_option": "Please select one of the below options",
-    "chat_started": "Now you can start chatting with the selected agent.\n\n Use /cancel command to go back.",
+    "chat_started": "Use /back command to go back or /cancel to go back to the main menu.",
     "error_message": "Sorry, I didn't understand that. Please try again.",
     "buttons": {
         "available_agents": "Available Agents",
-        "goals": "Create/Switch Goals",
-        "back": "Back to Main Menu",
+        "goals": "Create/Switch your Goal",
+        "back": "🔙 Main Menu",
         "login": "Log out -> Log in"
     },
     "login": {
@@ -29,7 +29,8 @@
         "successful": "Now you are successfully signed up and logged in. \nEnjoy Linguly : )"
     },
     "agents": {
-        "select_an_option": "Below are the available agents based on your selected goal: {{language}}, {{level}}\n\nPlease select one of the options to start chatting with them.",
+        "agent_description": "*Selected Agent:* {{agentName}}\n\n*Description:*\n\n{{description}}",
+        "select_an_option": "Below are the available agents based on your selected goal:\n- {{language}}, {{level}}\n\nPlease select one of the options to start interacting with them.",
         "no_available_agent": "No available agent based on your selected goal: {{language}}, {{level}}",
         "error_no_agent_selected": "No agent selected!",
         "error_unauthorized": "It seems you are not logged in.",
@@ -39,7 +40,7 @@
     "goals": {
         "entrance_message": "What would you like to do with your goals?",
         "create_a_goal": "Create a Goal",
-        "select_a_goal": "Select a Goal",
+        "select_a_goal": "Select/Change your Goal",
         "enter_language": "Please select the language for your goal.",
         "enter_context": "Please select the context for your goal.",
         "enter_level": "Please select the level for your goal.",
