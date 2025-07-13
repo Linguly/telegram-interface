@@ -15,7 +15,6 @@ const registerSignup = (bot: any, signup: Scenes.BaseScene<LingulyContext>) => {
     setBetweenSceneCommands(signup);
     /* Special commands */
     signup.enter(async (ctx: LingulyContext) => { await onEntrance(ctx) });
-    signup.command('help', async (ctx: LingulyContext) => { await reply(ctx, i18n.t('help_message')); });
     signup.on('message', async (ctx: LingulyContext) => {
         await parser(ctx);
     });
@@ -23,7 +22,7 @@ const registerSignup = (bot: any, signup: Scenes.BaseScene<LingulyContext>) => {
 
 const onEntrance = async (ctx: LingulyContext) => {
     await setUserState(ctx, 'signup_name');
-    await reply(ctx, i18n.t('signup.entrance_message'));
+    await reply(ctx, i18n.t('signup.entrance_message'), undefined, 0);
 }
 
 const parser = async (ctx: LingulyContext) => {
@@ -63,7 +62,7 @@ const signupTheUser = async (ctx: LingulyContext, password: string) => {
 
     if (response.success) {
         await reply(ctx, i18n.t('signup.successful'));
-        await ctx.scene.enter('mainMenu');
+        await ctx.scene.enter('goals');
     }
     else if (response.detail) {
         await reply(ctx, i18n.t('signup.error_with_detail') + response.detail);

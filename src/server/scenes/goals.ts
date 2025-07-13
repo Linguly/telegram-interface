@@ -16,13 +16,12 @@ const registerGoals = (bot: any, goals: Scenes.BaseScene<LingulyContext>) => {
     setBetweenSceneCommands(goals);
     /* Special commands */
     goals.enter(async (ctx: LingulyContext) => { await onEntrance(ctx) });
-    goals.command('help', async (ctx: LingulyContext) => { await reply(ctx, i18n.t('help_message')); });
     goals.on('message', async (ctx: LingulyContext) => { await parser(ctx); });
 }
 
 const onEntrance = async (ctx: LingulyContext) => {
     await setUserState(ctx, 'create_or_select_goal');
-    await reply(ctx, i18n.t('goals.entrance_message'), greetingOptions);
+    await reply(ctx, i18n.t('goals.entrance_message'), greetingOptions, 0);
 }
 
 const parser = async (ctx: LingulyContext) => {
@@ -71,7 +70,6 @@ const parser = async (ctx: LingulyContext) => {
                     await reply(ctx, i18n.t('goals.enter_period'), getPeriodOptions());
                     break;
                 case 'enter_period':
-                    await setUserState(ctx, 'create_or_select_goal');
                     ctx.session.newGoal.period = ctx.text;
                     await createTheGoal(ctx);
                     break;
@@ -90,7 +88,8 @@ const createTheGoal = async (ctx: LingulyContext) => {
     const response = await createGoal(ctx, language, level, context, period);
     if (response.success) {
         await reply(ctx, i18n.t('goals.goal_created_successfully'));
-        await ctx.scene.enter('goals');
+        await setUserState(ctx, 'select_a_goal');
+        await replyWithAvailableGoals(ctx);
     }
     else if (response.status === 401) {
         await reply(ctx, i18n.t('goals.error_unauthorized'));

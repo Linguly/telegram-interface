@@ -16,7 +16,6 @@ const registerAgents = (bot: any, agents: Scenes.BaseScene<LingulyContext>) => {
     setBetweenSceneCommands(agents);
     /* Special commands */
     agents.enter(async (ctx: LingulyContext) => { await onEntrance(ctx) });
-    agents.command('help', async (ctx: LingulyContext) => { await reply(ctx, i18n.t('help_message')); });
     agents.on('message', async (ctx: LingulyContext) => { await parser(ctx); });
 }
 
@@ -52,10 +51,10 @@ const replyWithAvailableAgents = async (ctx: LingulyContext) => {
         if (response.success) {
             availableAgents = response.data;
             if (availableAgents.length > 0) {
-                await reply(ctx, i18n.t('agents.select_an_option', selectedGoal), getAgentOptions(availableAgents));
+                await reply(ctx, i18n.t('agents.select_an_option', selectedGoal), getAgentOptions(availableAgents), 0);
             }
             else {
-                await reply(ctx, i18n.t('agents.no_available_agent', selectedGoal), getAgentOptions(availableAgents));
+                await reply(ctx, i18n.t('agents.no_available_agent', selectedGoal), getAgentOptions(availableAgents), 0);
             }
         }
         else if (response.status === 401) {

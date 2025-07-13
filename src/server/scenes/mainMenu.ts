@@ -13,13 +13,12 @@ const registerMainMenu = (bot: any, mainMenu: Scenes.BaseScene<LingulyContext>) 
     setBetweenSceneCommands(mainMenu);
     /* Special commands */
     mainMenu.enter(async (ctx: LingulyContext) => { await onEntrance(ctx) });
-    mainMenu.command('help', async (ctx: LingulyContext) => { await reply(ctx, i18n.t('help_message')); });
     mainMenu.on('message', async (ctx: LingulyContext) => { await parser(ctx); });
 }
 
 const onEntrance = async (ctx: LingulyContext) => {
     await setUserState(ctx, 'idle');
-    await reply(ctx, i18n.t('select_an_option'), mainMenuOptions);
+    await reply(ctx, i18n.t('select_an_option'), mainMenuOptions, 0);
 }
 
 const parser = async (ctx: LingulyContext) => {
