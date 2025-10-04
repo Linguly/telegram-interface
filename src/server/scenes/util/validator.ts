@@ -2,6 +2,7 @@ import { z } from "zod";
 import { LingulyContext } from './sceneCommon';
 import { reply } from './messenger';
 import I18n from '../../i18n/i18n';
+import logger from '../../utils/logger';
 
 const i18n = new I18n('en');
 
@@ -17,11 +18,11 @@ export async function validate(ctx: LingulyContext, inputType: string, input: an
         case 'email': result = emailSchema.safeParse(input); break;
         case 'password': result = passwordSchema.safeParse(input); break;
         default:
-            console.error(`Invalid inputType for validation: ${inputType}`);
+            logger.error(`Invalid inputType for validation: ${inputType}`);
             return false;
     }
     if (!result.success) {
-        console.error(result.error.errors[0].message);
+        logger.error(result.error.errors[0].message);
         await reply(ctx, result.error.errors[0].message);
         return false;
     } else {

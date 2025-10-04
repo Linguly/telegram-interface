@@ -1,6 +1,7 @@
 import { reply } from './util/messenger';
 import { Scenes } from 'telegraf';
 import I18n from '../i18n/i18n';
+import logger from '../utils/logger';
 import { getGoals, selectGoal, createGoal } from '../services/goals';
 import { setBetweenSceneCommands, LingulyContext } from './util/sceneCommon';
 import { setSelectedGoal } from '../localDB/agent';
@@ -96,7 +97,7 @@ const createTheGoal = async (ctx: LingulyContext) => {
         await ctx.scene.enter('login');
     }
     else {
-        console.error('Error creating goal:', response);
+        logger.error(response, 'Error creating goal:');
         await reply(ctx, i18n.t('goals.error_unknown'));
         await ctx.scene.enter('mainMenu');
     }
@@ -121,7 +122,7 @@ const replyWithAvailableGoals = async (ctx: LingulyContext) => {
         await ctx.scene.enter('login');
     }
     else {
-        console.error('Error fetching goals:', response);
+        logger.error(response, 'Error fetching goals:');
         await reply(ctx, i18n.t('goals.error_unknown'));
         await ctx.scene.enter('mainMenu');
     }

@@ -1,5 +1,6 @@
 import * as fs from 'fs';
 import * as path from 'path';
+import logger from '../utils/logger';
 
 class I18n {
     private translations: { [key: string]: string } = {};
@@ -14,7 +15,7 @@ class I18n {
             const data = fs.readFileSync(filePath, 'utf8');
             this.translations = JSON.parse(data);
         } else {
-            console.error(`Translation file for locale ${this.locale} not found.`);
+            logger.error(`Translation file for locale ${this.locale} not found.`);
         }
     }
 
