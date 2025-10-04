@@ -1,6 +1,7 @@
 import { reply } from './util/messenger';
 import { Scenes } from 'telegraf';
 import I18n from '../i18n/i18n';
+import logger from '../utils/logger';
 import { getAgents } from '../services/agents';
 import { getSelectedGoal } from '../services/goals';
 import { setBetweenSceneCommands, LingulyContext } from './util/sceneCommon';
@@ -62,7 +63,7 @@ const replyWithAvailableAgents = async (ctx: LingulyContext) => {
             await ctx.scene.enter('login');
         }
         else {
-            console.error('Error fetching agents:', response);
+            logger.error(response, 'Error fetching agents:');
             await reply(ctx, i18n.t('agents.error_unknown'));
             await ctx.scene.enter('mainMenu');
         }
@@ -88,7 +89,7 @@ const checkAndUpdateSelectedGoal = async (ctx: LingulyContext) => {
         return null;
     }
     else {
-        console.error('Error fetching selected goal:', response);
+        logger.error(response, 'Error fetching selected goal:');
         await reply(ctx, i18n.t('agents.error_unknown'));
         await ctx.scene.enter('mainMenu');
         return null;

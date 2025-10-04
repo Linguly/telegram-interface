@@ -1,4 +1,7 @@
 import { LingulyContext } from '../scenes/util/sceneCommon';
+import logger from '../utils/logger';
+
+/* Define the structure of the session data */
 
 export type UserState = 'idle'
     | 'login_or_signup' | 'login_email' | 'login_password' | 'signup_email' | 'signup_name' | 'signup_password'
@@ -22,7 +25,12 @@ export async function setUserToken(ctx: LingulyContext, token: string) {
         ctx.session = {};
     }
     ctx.session.userToken = token;
-    console.log(`User token for ${ctx.chat?.id} set successfully.`);
+    if (token) {
+        logger.info(`User token for ${ctx.chat?.id} set successfully.`);
+    }
+    else {
+        logger.info(`User token for ${ctx.chat?.id} cleared.`);
+    }
 }
 
 

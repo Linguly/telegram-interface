@@ -1,5 +1,6 @@
 import { Telegraf, session, Scenes } from 'telegraf';
 import { Redis } from "@telegraf/session/redis";
+import logger from './utils/logger';
 import { LingulyContext, LingulySession } from './scenes/util/sceneCommon';
 import { registerStart } from "./scenes/start";
 import { registerMainMenu } from "./scenes/mainMenu";
@@ -41,13 +42,13 @@ export default async () => {
         registerSignup(bot, signup);
         registerGoals(bot, goals);
 
-        console.log(`Launching the bot...`);
+        logger.info('Launching the bot...');
         await bot.launch(() => {
-            console.log(`🤖 Bot is up and running! :)`);
+            logger.info('🤖 Bot is up and running! :)');
         });
 
     } catch (err) {
-        console.error(err);
-        console.log(`Bot stopped! :|`);
+        logger.error(err, 'Bot stopped! :|');
+        process.exit(1);
     }
 }

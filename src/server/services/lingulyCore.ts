@@ -1,4 +1,5 @@
 import axios, { Method } from 'axios';
+import logger from '../utils/logger';
 
 async function callLingulyCoreApi(method: Method, url: string, body: any, token: string = ''): Promise<any> {
     var headers: Record<string, string> = { 'Content-Type': 'application/json' };
@@ -14,7 +15,7 @@ async function callLingulyCoreApi(method: Method, url: string, body: any, token:
         });
         return { success: true, data: response.data, status: response.status };
     } catch (error) {
-        console.error('Error calling Linguly Core API:', error);
+        logger.error(error, 'Error calling Linguly Core API:');
         if (axios.isAxiosError(error) && error.response) {
             return {
                 success: false,

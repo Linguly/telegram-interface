@@ -1,6 +1,7 @@
 import { reply } from './util/messenger';
 import { Scenes } from 'telegraf';
 import I18n from '../i18n/i18n';
+import logger from '../utils/logger';
 import { chatWithAgent, startTheAgent } from '../services/agents';
 import { setBetweenSceneCommands, LingulyContext } from './util/sceneCommon';
 import { getAgentId, getSelectedAgent } from '../localDB/agent';
@@ -37,7 +38,7 @@ const onEntrance = async (ctx: LingulyContext) => {
         const response = await startTheAgent(ctx, selectedAgent.id);
         await replyBasedOnResponse(ctx, response);
     } catch (error) {
-        console.error('Error during start the agent:', error);
+        logger.error(error, 'Error during start the agent:');
         await reply(ctx, i18n.t('error_message'));
     }
 }
@@ -58,7 +59,7 @@ const parser = async (ctx: LingulyContext) => {
         await replyBasedOnResponse(ctx, response);
 
     } catch (error) {
-        console.error('Error during chat with agent:', error);
+        logger.error(error, 'Error during chat with agent:');
         await reply(ctx, i18n.t('error_message'));
     }
 }
@@ -75,7 +76,7 @@ const replyBasedOnResponse = async (ctx: LingulyContext, response: any) => {
         await ctx.scene.enter('login');
     }
     else {
-        console.error('Error fetching agents:', response);
+        logger.error(response, 'Error fetching agents:');
         await reply(ctx, i18n.t('agents.error_unknown'));
         await ctx.scene.enter('mainMenu');
     }
